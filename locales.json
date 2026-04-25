@@ -1,0 +1,40 @@
+{
+  "en": {
+    "indicator": ["Feed post"],
+    "xpath": ["Suggested",
+              "Promoted",
+              "Promoted by",
+              "Promoted • Partnership with"],
+    "footer": "LikeCommentRepostSend",
+    "fail": "Start a post"
+  },
+  "ru": {
+    "indicator": ["Публикация в ленте"],
+    "xpath": ["Продвигается",
+              "Продвигается компанией",
+              "Продвигается • В партнерстве с компанией"],
+    "footer": "НравитсяКомментироватьПоделитьсяОтправить",
+    "fail": "Новая публикация"
+  },
+  "he": {
+    "indicator": ["פוסט בפיד"],
+    "xpath": ["ממומן",
+              "מקודם על ידי ⁦"],
+    "footer": "לעשות לייקתגובהפרסום מחדששליחה",
+    "fail": "כתבו פוסט"
+  },
+  "iw": {
+    "indicator": ["פוסט בפיד"],
+    "xpath": ["ממומן",
+              "מקודם על ידי ⁦"],
+    "footer": "לעשות לייקתגובהפרסום מחדששליחה",
+    "fail": "כתבו פוסט"
+  },
+
+  "template-do-not-look-here": {
+    "indicator": [],
+    "xpath": [],
+    "footer": "",
+    "fail": ""
+  }
+}
