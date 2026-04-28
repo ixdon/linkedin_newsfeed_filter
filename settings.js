@@ -72,9 +72,11 @@ document.getElementById('apply').addEventListener('click', () => {
       keyWords.push(e.value)
     };
   });
+  initial_hide_delay = document.getElementById("initial-hide-delay").value;
   hide_delay = document.getElementById("hide-delay").value;
   highlight_color = document.getElementById("highlight-color").value;
   settings = {
+    "initial_hide_delay":initial_hide_delay,
     "hide_delay":hide_delay,
     "highlight_color":highlight_color,
     "keywords":keyWords

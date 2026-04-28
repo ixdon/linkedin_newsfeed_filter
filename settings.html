@@ -30,12 +30,20 @@
         For now, this page is not localized yet.
     </div>
     <br>
+    <div id="initial-delay-container" class="settings-container">
+      <div id="initial-delay-main" style="width:480px;">
+      Initial delay (ms):
+        <input type="number" id="initial-hide-delay" value="2000"></input>
+      </div>
+    <div class="tooltip" title="Delay in ms before starting the script.&#10;Without this delay, the extension would not process initial posts.&#10;If the script doesn't hide the initial posts, you may try increasing this parameter">ℹ️</div>
+    </div>
+    <br>
     <div id="delay-container" class="settings-container">
       <div id="delay-main" style="width:480px;">
       Delay (ms):
         <input type="number" id="hide-delay" value="500"></input>
       </div>
-    <div class="tooltip" title="Delay in ms for hiding a post after it appears.&#10;Without such a delay, posts would be hidden incorrectly">ℹ️</div>
+    <div class="tooltip" title="Delay in ms for hiding a post after it appears.&#10;Without such a delay, posts would be hidden inproperly">ℹ️</div>
     </div>
 
     <br>
@@ -51,7 +59,7 @@
     <div id="keywords-container" style="font-size: large;width:500px;">
       <div id="keywords-explainer" class="settings-container">
         <div id="keywords-main" class="settings-main">Your keywords:</div>
-        <div class="tooltip" title="If a post contains any of these keywords anywhere, it will be highlighted">ℹ️</div>
+        <div class="tooltip" title="Here you can choose keywords that indicate that a post is more likely to be relevant for you.&#10;If a post contains any of these keywords anywhere, it will be highlighted&#10;For example, my keywords are SQL and Python">ℹ️</div>
       </div>
     </div>
 
@@ -63,6 +71,12 @@
       <button id="reset">Reset settings</button>
     </div>
     <div id="status">
+    </div>
+    <div id="contact">
+      <h2>Links:</h2>
+      <a href="https://github.com/ixdon/linkedin_newsfeed_filter/">Source code</a>
+      <br>
+      <a href="https://www.linkedin.com/in/vladimir-medvedev-b135ab262/">My LinkedIn page</a>
     </div>
     <script src="settings.js"></script>
   </body>
