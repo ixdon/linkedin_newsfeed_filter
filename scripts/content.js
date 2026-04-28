@@ -91,7 +91,6 @@ function process_post(post_container){
   if(!post_container){
     return;
   }
-  console.log('processing post:',post_container);
   const res = document.evaluate(xpath, post_container, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
   if(res.snapshotLength){
     set_post_visibility(post_container, false);
@@ -125,9 +124,7 @@ function main() {
         if (node.tagName !== 'DIV') return;
 
         if (node.className.includes('legacyNotifLineHeight')) return;
-        //console.log('2:',node);
         if (!check_footer(node)) return;
-        //console.log('3:',node);
         const pc = fpc_descend(node);
         setTimeout(() => process_post(pc), hide_delay);
       });
