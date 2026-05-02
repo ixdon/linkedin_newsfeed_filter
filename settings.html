@@ -6,69 +6,138 @@
     .settings-container{
       background-color:#CCCCCC;
       font-size: large;
-      width:500px;
+      width:400px;
       display:flex;
+      padding:15px;
     }
     .settings-main{
-      width:475px;
+      width:375px;
     }
     .tooltip{
       width:25px;
       user-select:none;
       cursor:help;
     }
+    .k,s{
+      padding-left:15px;
+    }
+    .b{
+      margin-left:15px;
+    }
+    .bn{
+      font-size:large;
+      padding:10px;
+      margin:10px;
+    }
+    .list-container{
+      width:420px;
+      background-color:#CCCCCC;
+      padding:5px;
+    }
+    .centered-headline{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    #all-words-container{
+      border-style:solid;
+      border-radius:10px;
+      padding:10px;
+    }
+    #button-container{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:large;
+
+    }
   </style>
   </head>
   <body>
-    <h1>Extension settings</h1>
-    <div id="tip-container" style="width:500px;background-color:#EEEEEE;font-size: large;">
-      <div id="tip-header" style="display:flex;">
-        This is settings page for the extension.
-        <br>
-        Here you can select your keywords, highlight color and delay
-        <br>
-        For now, this page is not localized yet.
-    </div>
+    <div id="root" style="width:920px;background-color:#EEEEEE;font-size: large;">
+      <h1 class="centered-headline">Extension settings</h1>
+    
+    <label for="ad-options">What to do with promoted/suggested posts?</label>
+      <select name="ad-options" id="ad-selector">
+        <option value="hide">Hide completely</option>
+        <option value="collapse" selected="selected">Collapse</option>
+        <option value="nothing">Nothing</option>
+      </select>
     <br>
-    <div id="initial-delay-container" class="settings-container">
-      <div id="initial-delay-main" style="width:480px;">
-      Initial delay (ms):
-        <input type="number" id="initial-hide-delay" value="2000"></input>
+    <label for="recommend-options">What to do with "recommendations"?</label>
+      <select name="redommend-options" id="recommend-selector">
+        <option value="hide">Hide completely</option>
+        <option value="collapse" selected="selected">Collapse</option>
+        <option value="nothing">Nothing</option>
+      </select>
+    <br>
+    <div id="all-words-container" style="background-color:gray;display:flex;">
+      <div id="keywords-container" style="font-size: large;width:500px;">
+        <h2 class="centered-headline">I DO want to see:</h2>
+        
+        <div id="highlight-color-container" class="settings-container">
+          <div id="highlight-color-main" class="settings-main">
+            Color for relevant posts:
+            <input type="text" id="highlight-color" style="width:80px;"value="#CCFFCC"></input>
+            <div id="highlight-example" style="width:400px;background-color:#CCFFCC;display:flex;aligh-items:center;justify-content:center;">(this color)</div>
+          </div>
+          <div class="tooltip" title="Color for highlighting post's header if it contains a keyword..&#10;May be either color name (green, magenta, blue) or RBG-encoded:.&#10;#RRGGBB.&#10;Default value: #CCFFCC (light green)">ℹ️</div>
+        </div>
+        <br>
+        <div id="keywords-explainer" class="settings-container">
+          <div id="keywords-main" class="settings-main">Positive keywords:</div>
+          <div class="tooltip" title="Here you can choose keywords that indicate that a post is more likely to be relevant for you.&#10;If a post contains any of these keywords anywhere, it will be highlighted&#10;For example, my keywords are SQL and Python.&#10;Please note, that the script searches for EXACT match everywhere on the post">ℹ️</div>
+        </div>
+        <div id="keywords-list-container" class="list-container"></div>
+        <button id="new-keyword" class="b">New keyword</button>
+      </div>
+
+      <div id="stopwords-container" style="font-size: large;width:500px;">
+        <h2 class="centered-headline">I do NOT want to see:</h2>
+        <div id="stop-color-container" class="settings-container">
+          <div id="stop-color-main" class="settings-main">
+            Color for irrelevant posts:
+            <input type="text" id="stop-color" style="width:80px;"value="#555555"></input>
+            <div id="stop-example" style="width:400px;background-color:#555555;display:flex;aligh-items:center;justify-content:center;">(this color)</div>
+          </div>
+          <div class="tooltip" title="Header color for a post contains a stop-word..&#10;May be either color name (green, magenta, blue) or RBG-encoded:.&#10;#RRGGBB.&#10;Default value: #555555 (gray)">ℹ️</div>
+        </div>
+
+        <label for="stop-options">What to do with irrelevant posts?</label>
+        <select name="stop-options" id="stop-selector">
+          <option value="hide">Hide completely</option>
+          <option value="collapse" selected="selected">Collapse</option>
+          <option value="highlight">Just highlight</option>
+        </select>
+
+        <div id="stopwords-explainer" class="settings-container">
+          <div id="stopwords-main" class="settings-main">Negative keywords:</div>
+          <div class="tooltip" title="Here you can choose stopwords that indicate that a post is not relevant for you.&#10;If a post contains any of these stopwords anywhere, it will be hidden&#10;For example, my stopwords are orchestration and singularity.&#10;Please note, that the script searches for EXACT match everywhere on the post">ℹ️</div>
+        </div>
+        <div id="stopwords-list-container" class="list-container"></div>
+        <button id="new-stopword" class="b">New keyword</button>
+      </div>
+    </div>
+      <div id="adv-settings-container">
+        Advanced settings
+        <div id="initial-delay-container" class="settings-container">
+          <div id="initial-delay-main" style="width:480px;">
+          Initial delay (ms):
+          <input type="number" id="initial-hide-delay" value="2000"></input>
       </div>
     <div class="tooltip" title="Delay in ms before starting the script.&#10;Without this delay, the extension would not process initial posts.&#10;If the script doesn't hide the initial posts, you may try increasing this parameter">ℹ️</div>
     </div>
-    <br>
     <div id="delay-container" class="settings-container">
       <div id="delay-main" style="width:480px;">
       Delay (ms):
         <input type="number" id="hide-delay" value="500"></input>
       </div>
-    <div class="tooltip" title="Delay in ms for hiding a post after it appears.&#10;Without such a delay, posts would be hidden inproperly">ℹ️</div>
+      <div class="tooltip" title="Delay in ms for hiding a post after it appears.&#10;Without such a delay, posts would be hidden inproperly">ℹ️</div>
     </div>
-
-    <br>
-    <div id="highlight-color-container" class="settings-container">
-      <div id="highlight-color-main" class="settings-main">
-        Color for highlighting posts:
-        <input type="text" id="highlight-color" style="width:80px;"value="#CCFFCC"></input>
-        <div id="highlight-example" style="width:500px;background-color:#CCFFCC">(this color)</div>
-      </div>
-      <div class="tooltip" title="Color for highlighting post's header if it contains a keyword..&#10;May be either color name (green, magenta, blue) or RBG-encoded:.&#10;#RRGGBB.&#10;Default value: #CCFFCC (light green)">ℹ️</div>
-    </div>   
-    <br> 
-    <div id="keywords-container" style="font-size: large;width:500px;">
-      <div id="keywords-explainer" class="settings-container">
-        <div id="keywords-main" class="settings-main">Your keywords:</div>
-        <div class="tooltip" title="Here you can choose keywords that indicate that a post is more likely to be relevant for you.&#10;If a post contains any of these keywords anywhere, it will be highlighted&#10;For example, my keywords are SQL and Python">ℹ️</div>
-      </div>
-    </div>
-
-    <button id="new">New keyword</button>
-    <br>
-    <br>
+  
     <div id="button-container">
-      <button id="apply">Apply settings</button>
-      <button id="reset">Reset settings</button>
+      <button id="apply" class="bn">Apply settings</button>
+      <button id="reset" class="bn">Reset settings</button>
     </div>
     <div id="status">
     </div>

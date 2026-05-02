@@ -1,8 +1,8 @@
 {
   "name": "LinkedIn Newsfeed Filter",
   "permissions": ["storage"],
-  "description": "Block ads in LinkedIn newsfeed, and highlight relevant posts",
-  "version": "0.0.2",
+  "description": "Customize your LinkedIn newsfeed. Hide ads and highlight relevant posts",
+  "version": "0.0.3",
   "manifest_version": 3,
   "options_page": "settings.html",
   "action": {

@@ -6,7 +6,9 @@
               "Promoted by",
               "Promoted • Partnership with"],
     "footer": "LikeCommentRepostSend",
-    "fail": "Start a post"
+    "fail": "Start a post",
+    "recommend":["Jobs recommended for you", "Recommended for you"],
+    "show_more":"Show More"
   },
   "ru": {
     "indicator": ["Публикация в ленте"],
@@ -14,27 +16,35 @@
               "Продвигается компанией",
               "Продвигается • В партнерстве с компанией"],
     "footer": "НравитсяКомментироватьПоделитьсяОтправить",
-    "fail": "Новая публикация"
+    "fail": "Новая публикация",
+    "recommend":["Рекомендуем для вас"],
+    "show_more":"Развернуть"
   },
   "he": {
     "indicator": ["פוסט בפיד"],
     "xpath": ["ממומן",
               "מקודם על ידי ⁦"],
     "footer": "לעשות לייקתגובהפרסום מחדששליחה",
-    "fail": "כתבו פוסט"
+    "fail": "כתבו פוסט",
+    "recommend":["מומלצים עבורך"],
+    "show_more":"הצג עוד"
   },
   "iw": {
     "indicator": ["פוסט בפיד"],
     "xpath": ["ממומן",
               "מקודם על ידי ⁦"],
     "footer": "לעשות לייקתגובהפרסום מחדששליחה",
-    "fail": "כתבו פוסט"
+      "fail": "כתבו פוסט",
+    "recommend":["מומלצים עבורך"],
+    "show_more":"הצג עוד"
   },
 
   "template-do-not-look-here": {
     "indicator": [],
     "xpath": [],
     "footer": "",
-    "fail": ""
+    "fail": "",
+    "recommend":[],
+    "show_more":""
   }
 }
