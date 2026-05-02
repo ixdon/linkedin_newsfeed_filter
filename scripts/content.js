@@ -26,7 +26,7 @@ function check_footer(element){
   T = element.textContent;
   L = T.length;
   showmore_flag = (T.slice(L-show_more.length,L) === show_more);
-  return element.innerHTML.includes("www.w3.org/2000/svg");
+  return element.innerHTML.includes("www.w3.org/2000/svg") || showmore_flag;
 }
 
 function fpc_ascend(element){
