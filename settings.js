@@ -82,6 +82,7 @@ chrome.storage.sync.get(['settings'], function(result) {
     stop_color = result.settings.stop_color;
     stop_option = result.settings.stop_option || "collapse";
     ad_option = result.settings.ad_option || "collapse";
+    sugg_option = result.settings.sugg_option || "collapse";
     recommend_option = result.settings.recommend_option || "collapse";
     document.getElementById("highlight-color").value = highlight_color;
     document.getElementById("highlight-example").style.backgroundColor = highlight_color;
@@ -89,6 +90,7 @@ chrome.storage.sync.get(['settings'], function(result) {
     document.getElementById("stop-example").style.backgroundColor = stop_color;
     document.getElementById("stop-selector").value = stop_option;
     document.getElementById("ad-selector").value = ad_option;
+    document.getElementById("sugg-selector").value = sugg_option;
     document.getElementById("recommend-selector").value = recommend_option;
       
   }
@@ -113,6 +115,7 @@ document.getElementById('apply').addEventListener('click', () => {
   stop_color = document.getElementById("stop-color").value;
   stop_option = document.getElementById("stop-selector").value;
   ad_option = document.getElementById("ad-selector").value;
+  sugg_option = document.getElementById("sugg-selector").value;
   recommend_option = document.getElementById("recommend-selector").value;
   settings = {
     "initial_hide_delay":initial_hide_delay,
@@ -123,6 +126,7 @@ document.getElementById('apply').addEventListener('click', () => {
     "stopwords":stopWords,
     "stop_option":stop_option,
     "ad_option":ad_option,
+    "sugg_option":sugg_option,
     "recommend_option":recommend_option
   }
   chrome.storage.sync.set({"settings": settings}, function() {
@@ -138,7 +142,9 @@ document.getElementById('apply').addEventListener('click', () => {
 document.getElementById('reset').addEventListener('click', () => {
   chrome.storage.sync.clear();
   status_message('Settings have been reset to default.');
-  console.log('Keywords reset');
+  chrome.storage.local.remove("status");
+  console.log('Settings reset to default');
+
 });
 
 document.getElementById('new-keyword').addEventListener('click', () => {

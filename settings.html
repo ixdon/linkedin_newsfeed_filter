@@ -6,12 +6,22 @@
     .settings-container{
       background-color:#CCCCCC;
       font-size: large;
-      width:400px;
+      width:380px;
       display:flex;
-      padding:15px;
+      padding:10px;
+    }
+    .half{
+      font-size: large;
+      width:400px;
+      margin:10px;
+    }
+    .dropdown-container{
+      width:400px;
+      height:120px;
+      background-color:red;
     }
     .settings-main{
-      width:375px;
+      width:350px;
     }
     .tooltip{
       width:25px;
@@ -19,7 +29,7 @@
       cursor:help;
     }
     .k,s{
-      padding-left:15px;
+      padding-left:10px;
     }
     .b{
       margin-left:15px;
@@ -30,16 +40,20 @@
       margin:10px;
     }
     .list-container{
-      width:420px;
+      width:380px;
       background-color:#CCCCCC;
-      padding:5px;
+      padding:10px;
     }
     .centered-headline{
       display:flex;
       justify-content:center;
       align-items:center;
     }
+    .action-selector{
+      width:250px;
+    }
     #all-words-container{
+      width:850px;
       border-style:solid;
       border-radius:10px;
       padding:10px;
@@ -57,33 +71,21 @@
     <div id="root" style="width:920px;background-color:#EEEEEE;font-size: large;">
       <h1 class="centered-headline">Extension settings</h1>
     
-    <label for="ad-options">What to do with promoted/suggested posts?</label>
-      <select name="ad-options" id="ad-selector">
-        <option value="hide">Hide completely</option>
-        <option value="collapse" selected="selected">Collapse</option>
-        <option value="nothing">Nothing</option>
-      </select>
-    <br>
-    <label for="recommend-options">What to do with "recommendations"?</label>
-      <select name="redommend-options" id="recommend-selector">
-        <option value="hide">Hide completely</option>
-        <option value="collapse" selected="selected">Collapse</option>
-        <option value="nothing">Nothing</option>
-      </select>
-    <br>
+    
     <div id="all-words-container" style="background-color:gray;display:flex;">
-      <div id="keywords-container" style="font-size: large;width:500px;">
+      <div id="keywords-container" class="half">
         <h2 class="centered-headline">I DO want to see:</h2>
-        
+        <div class="dropdown-container">
+  
+        </div>
         <div id="highlight-color-container" class="settings-container">
           <div id="highlight-color-main" class="settings-main">
             Color for relevant posts:
             <input type="text" id="highlight-color" style="width:80px;"value="#CCFFCC"></input>
-            <div id="highlight-example" style="width:400px;background-color:#CCFFCC;display:flex;aligh-items:center;justify-content:center;">(this color)</div>
+            <div id="highlight-example" class="color-example" style="width:380px;background-color:#CCFFCC;display:flex;aligh-items:center;justify-content:center;">(this color)</div>
           </div>
           <div class="tooltip" title="Color for highlighting post's header if it contains a keyword..&#10;May be either color name (green, magenta, blue) or RBG-encoded:.&#10;#RRGGBB.&#10;Default value: #CCFFCC (light green)">ℹ️</div>
         </div>
-        <br>
         <div id="keywords-explainer" class="settings-container">
           <div id="keywords-main" class="settings-main">Positive keywords:</div>
           <div class="tooltip" title="Here you can choose keywords that indicate that a post is more likely to be relevant for you.&#10;If a post contains any of these keywords anywhere, it will be highlighted&#10;For example, my keywords are SQL and Python.&#10;Please note, that the script searches for EXACT match everywhere on the post">ℹ️</div>
@@ -92,23 +94,76 @@
         <button id="new-keyword" class="b">New keyword</button>
       </div>
 
-      <div id="stopwords-container" style="font-size: large;width:500px;">
+      <div id="stopwords-container" class="half">
         <h2 class="centered-headline">I do NOT want to see:</h2>
+        <div class="dropdown-container">
+          <table>
+            <tbody>
+              <tr>
+              <th>Promoted posts:</th>
+              <th class="tooltip">ℹ️</th>
+              <th>
+                <label for="ad-options" class="action-selector"></label>
+                <select name="ad-options" id="ad-selector">
+                  <option value="hide">Hide completely</option>
+                  <option value="collapse" selected="selected">Collapse</option>
+                  <option value="nothing">Nothing</option>
+                </select>
+            </th>
+
+            <tr>
+              <th>Suggested posts:</th>
+              <th class="tooltip">ℹ️</th>
+              <th>
+                <select name="sugg-options" id="sugg-selector">
+                  <option value="hide">Hide completely</option>
+                  <option value="collapse" selected="selected">Collapse</option>
+                  <option value="nothing">Nothing</option>
+                </select>
+            </th>
+            </tr>
+            <tr>
+              <th>Recommendations:</th>
+              <th class="tooltip">ℹ️</th>
+              <th>
+                <label for="recommend-options" class="action-selector"></label>
+                <select name="recommend-options" id="recommend-selector">
+                  <option value="hide">Hide completely</option>
+                  <option value="collapse" selected="selected">Collapse</option>
+                  <option value="nothing">Nothing</option>
+                </select>
+            </th>
+            </tr>
+            <tr>
+              <th>Irrelevant posts:</th>
+              <th class="tooltip">ℹ️</th>
+              <th>
+                <label for="stop-options" class="action-selector"></label>
+                <select name="stop-options" id="stop-selector">
+                  <option value="hide">Hide completely</option>
+                  <option value="collapse" selected="selected">Collapse</option>
+                  <option value="highlight">Just highlight</option>
+                </select>
+              </th>
+            </tr>
+            </tbody>
+          </table>
+          
+          <br>
+          
+          <br>
+          
+        </div>
         <div id="stop-color-container" class="settings-container">
           <div id="stop-color-main" class="settings-main">
             Color for irrelevant posts:
             <input type="text" id="stop-color" style="width:80px;"value="#555555"></input>
-            <div id="stop-example" style="width:400px;background-color:#555555;display:flex;aligh-items:center;justify-content:center;">(this color)</div>
+            <div id="stop-example" style="width:380px;background-color:#555555;display:flex;aligh-items:center;justify-content:center;">(this color)</div>
           </div>
           <div class="tooltip" title="Header color for a post contains a stop-word..&#10;May be either color name (green, magenta, blue) or RBG-encoded:.&#10;#RRGGBB.&#10;Default value: #555555 (gray)">ℹ️</div>
         </div>
 
-        <label for="stop-options">What to do with irrelevant posts?</label>
-        <select name="stop-options" id="stop-selector">
-          <option value="hide">Hide completely</option>
-          <option value="collapse" selected="selected">Collapse</option>
-          <option value="highlight">Just highlight</option>
-        </select>
+        
 
         <div id="stopwords-explainer" class="settings-container">
           <div id="stopwords-main" class="settings-main">Negative keywords:</div>

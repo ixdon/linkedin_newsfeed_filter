@@ -1,8 +1,7 @@
 {
   "en": {
     "indicator": ["Feed post"],
-    "xpath": ["Suggested",
-              "Promoted",
+    "xpath": ["Promoted",
               "Promoted by",
               "Promoted • Partnership with"],
     "footer": "LikeCommentRepostSend",
