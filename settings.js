@@ -85,9 +85,9 @@ chrome.storage.sync.get(['settings'], function(result) {
     sugg_option = result.settings.sugg_option || "collapse";
     recommend_option = result.settings.recommend_option || "collapse";
     document.getElementById("highlight-color").value = highlight_color;
-    document.getElementById("highlight-example").style.backgroundColor = highlight_color;
+    //document.getElementById("highlight-example").style.backgroundColor = highlight_color;
     document.getElementById("stop-color").value = stop_color;
-    document.getElementById("stop-example").style.backgroundColor = stop_color;
+    //document.getElementById("stop-example").style.backgroundColor = stop_color;
     document.getElementById("stop-selector").value = stop_option;
     document.getElementById("ad-selector").value = ad_option;
     document.getElementById("sugg-selector").value = sugg_option;
@@ -133,8 +133,8 @@ document.getElementById('apply').addEventListener('click', () => {
     status_message('Settings saved!');
     console.log('Settings saved');
   });
-  document.getElementById("highlight-example").style.backgroundColor = highlight_color;
-  document.getElementById("stop-example").style.backgroundColor = stop_color;
+  //document.getElementById("highlight-example").style.backgroundColor = highlight_color;
+  //document.getElementById("stop-example").style.backgroundColor = stop_color;
   console.log(settings);
   document.getElementById('status').textContent = 'Done!';
 });

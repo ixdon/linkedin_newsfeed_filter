@@ -3,6 +3,10 @@
   <head>
   <meta charset="UTF-8" />
   <style>
+    body{
+      display:flex;
+      justify-content: center;
+    }
     .settings-container{
       background-color:#CCCCCC;
       font-size: large;
@@ -18,7 +22,7 @@
     .dropdown-container{
       width:400px;
       height:120px;
-      background-color:red;
+      background-color:lightgray;
     }
     .settings-main{
       width:350px;
@@ -36,8 +40,9 @@
     }
     .bn{
       font-size:large;
-      padding:10px;
+      padding:20px;
       margin:10px;
+      border-radius: 10px;
     }
     .list-container{
       width:380px;
@@ -68,23 +73,67 @@
   </style>
   </head>
   <body>
-    <div id="root" style="width:920px;background-color:#EEEEEE;font-size: large;">
+    <div id="root" style="width:920px;background-color:#EEEEEE;font-size: large; align-items:center; justify-content:center;">
       <h1 class="centered-headline">Extension settings</h1>
     
     
     <div id="all-words-container" style="background-color:gray;display:flex;">
       <div id="keywords-container" class="half">
-        <h2 class="centered-headline">I DO want to see:</h2>
+        <h2 class="centered-headline">Relevant content:</h2>
+        
         <div class="dropdown-container">
+          <table>
+            <tbody>
+              <tr>
+                <th>People I follow:</th>
+                <th class="tooltip">ℹ️</th>
+                <th>
+                  <label for="connections" class="action-selector"></label>
+                  <select name="connections">
+                    <option value="show" selected="selected">Always show</option>
+                  </select>
+                </th>
+              </tr>
+              <tr>
+              <th>Companies I follow:</th>
+                <th class="tooltip">ℹ️</th>
+                <th>
+                  <label for="connections" class="action-selector"></label>
+                  <select name="connections">
+                    <option value="show" selected="selected">Always show</option>
+                  </select>
+                </th>
+              </tr>
+              <tr>
+                <th>Connections' likes</th>
+                <th class="tooltip">ℹ️</th>
+                <th>
+                  <label for="connections" class="action-selector"></label>
+                  <select name="connections">
+                    <option value="show" selected="selected">Always show</option>
+                  </select>
+                </th>
+              </tr>
+              <tr>
+                <th>Connections' comments</th>
+                <th class="tooltip">ℹ️</th>
+                <th>
+                  <label for="connections" class="action-selector"></label>
+                  <select name="connections">
+                    <option value="show" selected="selected">Always show</option>
+                  </select>
+                </th>
+              </tr>
+            </tbody>
+          </table>
   
         </div>
         <div id="highlight-color-container" class="settings-container">
           <div id="highlight-color-main" class="settings-main">
             Color for relevant posts:
-            <input type="text" id="highlight-color" style="width:80px;"value="#CCFFCC"></input>
-            <div id="highlight-example" class="color-example" style="width:380px;background-color:#CCFFCC;display:flex;aligh-items:center;justify-content:center;">(this color)</div>
+            <input type="color" id="highlight-color" style="width:80px;"value="#CCFFCC"></input>
           </div>
-          <div class="tooltip" title="Color for highlighting post's header if it contains a keyword..&#10;May be either color name (green, magenta, blue) or RBG-encoded:.&#10;#RRGGBB.&#10;Default value: #CCFFCC (light green)">ℹ️</div>
+          <div class="tooltip" title="Color for highlighting post's header if it contains a keyword.">ℹ️</div>
         </div>
         <div id="keywords-explainer" class="settings-container">
           <div id="keywords-main" class="settings-main">Positive keywords:</div>
@@ -95,7 +144,7 @@
       </div>
 
       <div id="stopwords-container" class="half">
-        <h2 class="centered-headline">I do NOT want to see:</h2>
+        <h2 class="centered-headline">Unwanted content:</h2>
         <div class="dropdown-container">
           <table>
             <tbody>
@@ -157,10 +206,9 @@
         <div id="stop-color-container" class="settings-container">
           <div id="stop-color-main" class="settings-main">
             Color for irrelevant posts:
-            <input type="text" id="stop-color" style="width:80px;"value="#555555"></input>
-            <div id="stop-example" style="width:380px;background-color:#555555;display:flex;aligh-items:center;justify-content:center;">(this color)</div>
+            <input type="color" id="stop-color" style="width:80px;"value="#555555"></input>
           </div>
-          <div class="tooltip" title="Header color for a post contains a stop-word..&#10;May be either color name (green, magenta, blue) or RBG-encoded:.&#10;#RRGGBB.&#10;Default value: #555555 (gray)">ℹ️</div>
+          <div class="tooltip" title="Header color for a post contains a negative keyword">ℹ️</div>
         </div>
 
         
@@ -174,20 +222,22 @@
       </div>
     </div>
       <div id="adv-settings-container">
-        Advanced settings
-        <div id="initial-delay-container" class="settings-container">
-          <div id="initial-delay-main" style="width:480px;">
-          Initial delay (ms):
-          <input type="number" id="initial-hide-delay" value="2000"></input>
-      </div>
-    <div class="tooltip" title="Delay in ms before starting the script.&#10;Without this delay, the extension would not process initial posts.&#10;If the script doesn't hide the initial posts, you may try increasing this parameter">ℹ️</div>
-    </div>
-    <div id="delay-container" class="settings-container">
-      <div id="delay-main" style="width:480px;">
-      Delay (ms):
-        <input type="number" id="hide-delay" value="500"></input>
-      </div>
-      <div class="tooltip" title="Delay in ms for hiding a post after it appears.&#10;Without such a delay, posts would be hidden inproperly">ℹ️</div>
+        <details>
+          <summary>Advanced Settings</summary>
+          <div id="initial-delay-container" class="settings-container">
+            <div id="initial-delay-main" style="width:480px;">
+              Initial delay (ms):
+              <input type="number" id="initial-hide-delay" value="2000"></input>
+            </div>
+            <div class="tooltip" title="Delay in ms before starting the script.&#10;Without this delay, the extension would not process initial posts.&#10;If the script doesn't hide the initial posts, you may try increasing this parameter">ℹ️</div>
+          </div>
+          <div id="delay-container" class="settings-container">
+            <div id="delay-main" style="width:480px;">
+              Delay (ms):
+              <input type="number" id="hide-delay" value="500"></input>
+            </div>
+            <div class="tooltip" title="Delay in ms for hiding a post after it appears.&#10;Without such a delay, posts would be hidden inproperly">ℹ️</div>
+          </details>
     </div>
   
     <div id="button-container">

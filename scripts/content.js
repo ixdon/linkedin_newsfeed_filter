@@ -5,25 +5,21 @@ let keywords = [];
 let stopwords = [];
 let signature_string = '';
 let fail_signature = '';
-let xpath = '';
-let xpath_initial_posts = '';
 let hide_delay = 500;
 let stop_option = 'collapse';
 let ad_option = 'collapse';
 let recommend_option = 'collapse';
 let sugg_option = 'collapse';
-let xpath_recommend = '';
-let show_more = 'TEMPLATESTRING';
-let DEBUG_MODE = false;
 let lang_data = {};
-
-//turns an array of strings into single XPath string
-function xs(L){
-    return ".//*[text()='"+
-        L.join("' or text() ='")+
-        "']";
+let DEBUG_MODE = false;
+let DEBUGGER = {
+  "highlight_post":true,
+  "process_post":true,
+  "href_change":true
 }
 
+
+//Navigation section
 function sarray_xpath(sarray, target){
   xxs = ".//*[text()='"+
         sarray.join("' or text() ='")+
@@ -34,10 +30,7 @@ function sarray_xpath(sarray, target){
 
 function check_footer(element){
   if(!element) return false;
-  //T = element.textContent;
-  //L = T.length;
-  //showmore_flag = (T.slice(L-show_more.length,L) === show_more);
-  return element.innerHTML.includes("www.w3.org/2000/svg")// || showmore_flag;
+  return element.innerHTML.includes("www.w3.org/2000/svg")
 }
 
 function fpc_ascend(element){
@@ -62,11 +55,10 @@ function fpc_descend(element){
 }
 
 function find_header(post_container){
-  const res = document.evaluate(xpath_recommend, post_container, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-  const r_flag = (res.snapshotLength > 0)
-  if(r_flag){
+  if(sarray_xpath(lang_data["recommend"],post_container).snapshotLength > 0){
     return post_container.children[1].firstChild;
   }
+  
   let pe = post_container.firstElementChild;
   while(pe && pe.querySelectorAll(':scope > a').length == 0){
     pe = pe.nextElementSibling; 
@@ -78,6 +70,7 @@ function find_header(post_container){
   return pe
 }
 
+//Processing section
 function set_post_visibility(post_container, show_flag, mode){
   switch(mode){
     case "hide":
@@ -102,6 +95,7 @@ function highlight_post(post_container,c){
   const header = find_header(post_container);
   if(!header) return;
   header.style.backgroundColor = c;
+  if(DEBUGGER.highlight_post){console.log('[DEBUG] highlighting:',header)}
 }
 
 function add_button(post_container){
@@ -120,36 +114,42 @@ function add_button(post_container){
     return;
   }
   header.appendChild(btn);
-
   btn.addEventListener("click", function(){
     set_post_visibility(post_container,btn.hiding,"collapse");
     btn.hiding = !btn.hiding;
     btn.textContent = btn.hiding ? '⬇️' : '⬆️';
-
   });
 }
 
 function process_post(post_container){
   if(!post_container){
+    console.log('wtf?')
     return;
   }
-
-  const sugg_flag = sarray_xpath(['Suggested'],post_container)?.snapshotLength > 0;
-  const ad_flag = (sarray_xpath(lang_data.xpath,post_container)?.snapshotLength > 0);
-  const rec_flag = (sarray_xpath(lang_data.recommend,post_container)?.snapshotLength > 0)
+  //if(sarray_xpath(lang_data.indicator,post_container)?.snapshotLength==0) return;
+  if(DEBUGGER.process_post){
+    console.log('[DEBUG] processing:',post_container,'; indicator:',sarray_xpath(lang_data.indicator,post_container)?.snapshotLength!=0)
+  }
+  //const sugg_flag = sarray_xpath(['Suggested'],post_container)?.snapshotLength > 0;
+  const sugg_flag = sarray_xpath(lang_data.suggested,post_container)?.snapshotLength > 0;
+  const ad_flag = sarray_xpath(lang_data.xpath,post_container)?.snapshotLength > 0;
+  const rec_flag = sarray_xpath(lang_data.recommend,post_container)?.snapshotLength > 0;
   let highlight_flag = false;
   let stop_flag = false;
   //if(DEBUG_MODE) console.log(post_container,[ad_flag,rec_flag,highlight_flag,stop_flag]);
 
-  if(sugg_flag){
-    set_post_visibility(post_container, false, sugg_option);
-    if(sugg_option == 'collapse') add_button(post_container);
-    return
-  }
   if(rec_flag){
     set_post_visibility(post_container, false, recommend_option);
     if(recommend_option == 'collapse') add_button(post_container);
     return
+  }
+  if(sugg_flag){
+    set_post_visibility(post_container, false, sugg_option);
+    if(sugg_option=="collapse") add_button(post_container);
+  }
+  if(ad_flag){
+    set_post_visibility(post_container, false,ad_option);
+    if(ad_option=="collapse") add_button(post_container);
   }
   keywords.forEach((k) => {
     if(post_container.textContent.includes(k)) highlight_flag = true;
@@ -157,11 +157,6 @@ function process_post(post_container){
   stopwords.forEach((s) => {
     if(post_container.textContent.includes(s)) stop_flag = true;
   });
-  if(ad_flag){
-    set_post_visibility(post_container, false,ad_option);
-    if(stop_flag) highlight_post(post_container, stop_color);
-    if(ad_option=="collapse") add_button(post_container);
-  }
   if(highlight_flag && stop_flag){
     highlight_post(post_container, 'teal')
     set_post_visibility(post_container, false,"collapse");
@@ -199,6 +194,10 @@ function load_settings(obj){
   recommend_option = obj?.recommend_option || "collapse";
 }
 
+function add_classic_search_btn(){
+  console.log('adding the classic search button (test)')
+}
+
 let lastURL = location.href;
 
 const observer = new MutationObserver((mutations) => {
@@ -212,6 +211,9 @@ const observer = new MutationObserver((mutations) => {
         }
       }
     }
+    if(location.href.includes("/search-results/")){
+      add_classic_search_btn();
+    }
     lastURL = location.href;
   }
   mutations.forEach((mutation) => {
@@ -220,6 +222,8 @@ const observer = new MutationObserver((mutations) => {
       if (node.tagName !== 'DIV') return;
       if (node.className.includes('legacyNotifLineHeight')) return;
       if (!check_footer(node)) return;
+      if (sarray_xpath(lang_data.indicator,node)?.snapshotLength == 0) return;
+      //sarray_xpath(lang_data.recommend,post_container)?.snapshotLength > 0
       const pc = fpc_descend(node);
       setTimeout(() => process_post(pc), hide_delay);
     });
@@ -249,7 +253,7 @@ function initial_processing(mode){
 function main() {
   console.log('L:',lang_data);
   chrome.storage.local.get("status", (s) => {
-    console.log('s:',s);
+    console.log('status:',s);
     if(Object.keys(s).length === 0){
       initial_processing();
       observer.observe(document.body, {childList: true, subtree: true});
@@ -275,7 +279,7 @@ function main() {
       console.log('new settings!');
       load_settings(changes.settings.newValue);
       chrome.storage.local.get("status", (s) => {
-        console.log('s:',s);
+        console.log('status:',s);
         if(Object.keys(s).length === 0){
           observer.disconnect();
           initial_processing("refresh");
@@ -287,6 +291,7 @@ function main() {
   });  
 }
 
+//Entry point
 const fileUrl = chrome.runtime.getURL('locales.json');
 
 fetch(fileUrl)
@@ -303,12 +308,8 @@ fetch(fileUrl)
       throw new Error('unsupported language:' + language);
     }
     lang_data = data[language];
-    xpath_initial_posts = xs(data[language]["indicator"]);
-    xpath = xs(data[language]["xpath"]);
-    xpath_recommend = xs(data[language]["recommend"]);
     signature_string = data[language]["footer"];
     fail_signature = data[language]["fail"];
-    show_more = data[language]["show_more"];
     console.log(data[language]);
 
     chrome.storage.sync.get(['settings'], function(result) {
