@@ -60,7 +60,7 @@ function find_header(post_container){
   }
   
   let pe = post_container.firstElementChild;
-  while(pe && pe.querySelectorAll(':scope > a').length == 0){
+  while(pe && !pe.querySelector('a')){
     pe = pe.nextElementSibling; 
   }
   if(!pe){
